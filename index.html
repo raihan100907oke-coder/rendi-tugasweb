@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas Web & Perpustakaan (Modern UI)</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    // =========================================================================
+    // 1. MEMBUAT DAN MEMASUKKAN CSS KE DALAM HALAMAN (DESAIN MODERN)
+    // =========================================================================
+    const styleSheet = document.createElement("style");
+    styleSheet.innerHTML = `
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * { padding: 0; margin: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; }
+        
+        /* Layout Utama */
+        .wrapper { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        /* Tema Card Umum */
+        .card { background: #fff; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); padding: 25px; margin-bottom: 25px; transition: transform 0.3s ease; }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .card-header { font-size: 1.2rem; font-weight: 600; color: #4361ee; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; display: flex; align-items: center; }
+        
+        /* Bagian A: Perpustakaan Modern */
+        .lib-header { background: linear-gradient(135deg, #4361ee, #3a0ca3); color: white; border-radius: 12px; padding: 30px; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3); }
+        .lib-header h1 { font-weight: 700; letter-spacing: 1px; }
+        .lib-grid { display: grid; grid-template-columns: 250px 1fr 250px; gap: 20px; margin-bottom: 40px; }
+        .lib-menu ul { list-style: none; }
+        .lib-menu li a { display: block; padding: 12px 15px; background: #f8f9fa; margin-bottom: 8px; border-radius: 8px; text-decoration: none; color: #495057; font-weight: 500; transition: all 0.3s; }
+        .lib-menu li a:hover { background: #4361ee; color: white; padding-left: 20px; }
+        .lib-content img { border-radius: 10px; width: 100%; max-height: 300px; object-fit: cover; margin: 15px 0; }
+        .lib-content a { color: #f72585; font-weight: 600; text-decoration: none; }
+        
+        /* Bagian B: Tugas Gabungan */
+        .tugas-title { text-align: center; font-size: 2rem; color: #2b2d42; margin: 40px 0 20px; font-weight: 700; }
+        .profile-badge { display: inline-block; background: #e0e7ff; color: #4361ee; padding: 8px 20px; border-radius: 20px; font-weight: 600; margin: 5px; }
+        
+        /* Grid untuk Tugas agar rapi */
+        .tugas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+        
+        /* Tabel Modern */
+        .styled-table { width: 100%; border-collapse: collapse; border-radius: 8px; overflow: hidden; }
+        .styled-table thead tr { background-color: #4361ee; color: #ffffff; text-align: left; }
+        .styled-table th, .styled-table td { padding: 12px 15px; border-bottom: 1px solid #dddddd; font-size: 0.9rem; }
+        .styled-table tbody tr:nth-of-type(even) { background-color: #f8f9fa; }
+        .styled-table tbody tr:hover { background-color: #eef2ff; }
+        
+        /* Form Modern */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .input-group { display: flex; flex-direction: column; margin-bottom: 10px; }
+        .input-group label { font-size: 0.85rem; color: #6c757d; font-weight: 600; margin-bottom: 5px; }
+        input[type="text"], select { padding: 10px 12px; border: 1px solid #ced4da; border-radius: 6px; font-family: 'Poppins', sans-serif; transition: border 0.3s; width: 100%; }
+        input[type="text"]:focus, select:focus { border-color: #4361ee; outline: none; box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15); }
+        input[readonly] { background-color: #e9ecef; font-weight: 600; color: #495057; }
+        
+        /* Buttons */
+        .btn { display: inline-block; padding: 10px 20px; background: linear-gradient(135deg, #4361ee, #3f37c9); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-family: inherit; transition: 0.3s; text-align: center; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 10px rgba(67,97,238,0.3); }
+        .btn-reset { background: linear-gradient(135deg, #ef233c, #d90429); }
+        .btn-reset:hover { box-shadow: 0 5px 10px rgba(239,35,60,0.3); }
+        .btn-dark { background: linear-gradient(135deg, #2b2d42, #141526); }
+        
+        /* Custom Box (Info, Output) */
+        .output-box { background: #1e1e2f; color: #00ffcc; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.9rem; margin-top: 10px; }
+        .clock-widget { background: #2b2d42; color: #fff; text-align: center; padding: 20px; border-radius: 12px; }
+        .clock-widget input { background: transparent; border: none; color: #00ffcc; font-size: 2.5rem; font-weight: 700; text-align: center; text-shadow: 0 0 10px rgba(0,255,204,0.5); width: 100%; outline: none; }
+        
+        /* Latihan CSS Lists */
+        .latihan-css-box ul { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
+        .latihan-css-box li { list-style: none; }
+        .latihan-css-box li a { padding: 8px 15px; background: #e0e7ff; border-radius: 20px; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+        .latihan-css-box li:nth-child(even) a { background: #d1fae5; color: #059669; }
+        .latihan-css-box li:nth-child(odd) a { background: #fce7f3; color: #db2777; }
+        
+        /* Responsive */
+        @media screen and (max-width: 900px) {
+            .lib-grid { grid-template-columns: 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
+        }
+    `;
+    document.head.appendChild(styleSheet);
+
+    // =========================================================================
+    // 2. FUNGSI LOGIKA (TETAP SAMA SEPERTI ASLINYA)
+    // =========================================================================
+    function hitungtotal() {
+        var tujuan = document.fform.itujuan.value;
+        var jumlahtiket = parseFloat(document.fform.ijumlah.value);
+        if (isNaN(jumlahtiket)) jumlahtiket = 0; 
+        
+        var ht = (tujuan == "Jakarta") ? 100000 : ((tujuan == "Cirebon") ? 150000 : 200000);
+        var sub = jumlahtiket * ht;
+        var diskon = (document.fform.imember.checked == true) ? 0.10 * sub : 0.0;
+        var total = sub - diskon; 
+        
+        document.fform.otiket.value = "Rp " + ht.toLocaleString('id-ID'); 
+        document.fform.osub.value = "Rp " + sub.toLocaleString('id-ID'); 
+        document.fform.odiskon.value = "Rp " + diskon.toLocaleString('id-ID'); 
+        document.fform.ototal.value = "Rp " + total.toLocaleString('id-ID');
+    }
+
+    function myfunction(txt) { alert(txt); }
+    function masukannim(){ if (document.f.inim.value == "") alert("Anda belum memasukkan NIM"); }
+    function masukannama(){ if (document.f.inama.value == "") alert("Anda belum memasukkan Nama"); }
+    function masukanalamat(){ if (document.f.ialamat.value == "") alert("Anda belum memasukkan Alamat"); }
+    function terimakasih(){
+        if (document.f.inim.value != "" && document.f.inama.value != "" && document.f.ialamat.value != "") {
+            alert("Terima Kasih Telah Mengisi Data");
+        } else {
+            alert("Mohon Data Dilengkapi");
+        }
+    }
+
+    var timer = null;
+    function startClock() {
+        var time = new Date();
+        var hours = time.getHours() < 10 ? "0" + time.getHours() : time.getHours();
+        var minutes = time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes(); 
+        var seconds = time.getSeconds() < 10 ? "0" + time.getSeconds() : time.getSeconds(); 
+        
+        var displayElement = document.getElementById("clockDisplay");
+        if(displayElement) displayElement.value = hours + ":" + minutes + ":" + seconds;
+        timer = setTimeout(startClock, 1000); 
+    }
+
+    var pesan =" Hallo Friend... Apa Kabar? ";
+    var pesan2 =" Welcome To My website ";
+    function p(){
+        if(document.basis && document.basis.kotak) {
+            document.basis.kotak.value = pesan;
+            pesan = pesan.substr(1) + pesan.charAt(0);
+            pesan2 = pesan2.substr(1) + pesan2.charAt(0);
+            window.status = pesan2;
+            setTimeout(p, 150);
+        }
+    }
+
+    function prosesBeasiswa() {
+        var nama = document.getElementsByName('nama_beasiswa')[0].value;
+        var nim = document.getElementsByName('nim_beasiswa')[0].value;
+        var kelas = document.getElementsByName('kelas_beasiswa')[0].value;
+        var jurusan = document.getElementsByName('jurusan_beasiswa')[0].value;
+        var jekelEl = document.querySelector('input[name="jekel"]:checked');
+        var jekel = jekelEl ? jekelEl.value : "-";
+        var ipk = parseFloat(document.getElementsByName('ipk')[0].value);
+        
+        var ket = (ipk >= 3.0) ? "Mendapat beasiswa sebesar Rp. 1.000.000" : "Maaf, Tidak dapat beasiswa";
+        
+        var hasilHTML = `
+            <div style="background: #eef2ff; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 5px solid #4361ee;">
+                <strong>Hasil Seleksi:</strong><br>
+                Nama: ${nama} | NIM: ${nim} | Jurusan: ${jurusan} <br>
+                IPK: <strong>${ipk}</strong> <br>
+                <span style="color: ${ipk >= 3.0 ? '#059669' : '#dc2626'}; font-weight: bold; font-size: 1.1rem;">${ket}</span>
+            </div>`;
+        document.getElementById('hasilBeasiswa').innerHTML = hasilHTML;
+    }
+
+    function prosesWaktuServer() {
+        var nama = document.getElementById('firstName').value;
+        if(nama) {
+            var dateStr = new Date().toLocaleString('id-ID'); 
+            document.getElementById('hasilWaktu').innerHTML = `
+                <div style="background: #fff; border: 2px dashed #4361ee; padding: 20px; border-radius: 10px;">
+                    <h3 style="color:#4361ee;">Tiket Request Server</h3>
+                    <p>Halo <strong>${nama}</strong>, Request Anda telah diterima!</p>
+                    <div style="background:#1e1e2f; color:#00ffcc; padding: 10px; border-radius:5px; font-family:monospace; margin: 15px 0;">
+                        Waktu Tercatat: ${dateStr}
+                    </div>
+                    <button class="btn btn-reset" onclick="location.reload()">Reset Halaman</button>
+                </div>
+            `;
+        }
+    }
+
+    function testWindowObj() {
+        window.alert("Selamat Datang di Test Window Object"); 
+        var angka = window.prompt("Inputkan Angka Favorit Anda?", "7"); 
+        var tampung = window.confirm("Apakah Anda menyukai pemrograman Web?"); 
+        
+        var out = "Angka favorit anda adalah = <strong>" + (angka || "Tidak diisi") + "</strong><br>"; 
+        if (tampung) out += "<span style='color:#059669; font-weight:bold;'>Wah, kita sama-sama suka Web!</span><br>";
+        else out += "<span style='color:#dc2626;'>Sayang sekali, padahal seru loh!</span><br>";
+        
+        document.getElementById("output-bagian8").innerHTML = `<div class="output-box">${out}</div>`;
+    }
+
+    // =========================================================================
+    // 3. MERENDER STRUKTUR HTML (TELAH DIPERBARUI DESAINNYA)
+    // =========================================================================
+    document.body.innerHTML = `
+        <div class="wrapper">
+            
+            <!-- BAGIAN A: PERPUSTAKAAN RESPONSIVE MODERN -->
+            <div class="lib-header">
+                <h1>📚 Portal Digital</h1>
+                <p>Ngoding Membangun Masa Depan</p>
+            </div>
+            
+            <div class="lib-grid">
+                <div class="card lib-menu">
+                    <div class="card-header">📌 Navigasi Menu</div>
+                    <ul>
+                        <li><a href="#">🏠 Beranda</a></li>
+                        <li><a href="#">👤 Tentang Saya</a></li>
+                        <li><a href="#">🔑 Login Akun</a></li>
+                    </ul>
+                </div>
+                
+                <div class="card lib-content">
+                    <div class="card-header">📰 Berita Utama</div>
+                    <h2>Membuat Desain Web Responsif & Modern</h2>
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 10px;">Diposting pada 14 Oktober 2026</p>
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Web Design">
+                    <p>Di era digital ini, membangun website yang terlihat bagus di HP maupun Laptop adalah kewajiban seorang Web Developer</p>
+                    <br>
+
+                </div>
+                
+                <div class="card lib-menu">
+                    <div class="card-header">🏷️ Kategori Ilmu</div>
+                    <ul>
+                        <li><a href="#">🎨 Web Design (UI/UX)</a></li>
+                        <li><a href="#">💻 Pemrograman JS/PHP</a></li>
+                        <li><a href="#">🗄️ Database System</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BAGIAN B: TUGAS GABUNGAN WEB -->
+            <h1 class="tugas-title">tugas javaweb</h1>
+            <div style="text-align: center; margin-bottom: 40px;">
+                <span class="profile-badge">👨‍💻 Rendi</span>
+                <span class="profile-badge">🎓 NIM: 251091700183</span>
+            </div>
+
+            <div class="tugas-grid">
+                
+                <!-- Bagian 1 & 3: Data & String -->
+                <div class="card">
+                    <div class="card-header">Bagian 1: Data Mahasiswa</div>
+                    <div style="overflow-x:auto;">
+                        <table class="styled-table">
+                            <thead>
+                                <tr><th>NIM</th><th>Nama</th><th>Jurusan</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>12110001</td><td>Anita</td><td>Sistem Informasi</td></tr>
+                                <tr><td>12110002</td><td>Aditya</td><td>Sistem Informasi</td></tr>
+                                <tr><td>12110003</td><td>Firman</td><td>Sistem Informasi</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="card-header" style="margin-top: 25px;">Bagian 3: Variabel & String</div>
+                    <div id="php-dasar-1" class="output-box"></div>
+                    <div id="php-dasar-2" class="output-box" style="margin-top:10px;"></div>
+                </div>
+
+                <!-- Bagian 2: Tiket Travel -->
+                <div class="card">
+                    <div class="card-header">Bagian 2: Travel Bintang Abadi</div>
+                    <form name="fform">
+                        <div class="form-grid">
+                            <div>
+                                <div class="input-group">
+                                    <label>Nama Pemesan</label>
+                                    <input type="text" name="inama" placeholder="Masukkan Nama">
+                                </div>
+                                <div class="input-group">
+                                    <label>Kota Tujuan</label>
+                                    <select name="itujuan">
+                                        <option value="Jakarta">Jakarta (Rp 100.000)</option>
+                                        <option value="Cirebon">Cirebon (Rp 150.000)</option>
+                                        <option value="Tasikmalaya">Tasikmalaya (Rp 200.000)</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <label>Jumlah Tiket</label>
+                                    <input type="text" name="ijumlah" placeholder="0">
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <label><input type="checkbox" name="imember"> Saya adalah Member (Diskon 10%)</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="input-group"><label>Harga Tiket</label><input type="text" name="otiket" readonly></div>
+                                <div class="input-group"><label>Sub Total</label><input type="text" name="osub" readonly></div>
+                                <div class="input-group"><label>Diskon</label><input type="text" name="odiskon" readonly></div>
+                                <div class="input-group"><label>Total Bayar</label><input type="text" name="ototal" readonly style="color: #ef233c; font-weight: 700;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px; text-align: center;">
+                            <button type="button" class="btn" onclick="hitungtotal()">Kalkulasi Biaya</button>
+                            <button type="reset" class="btn btn-reset">Reset Form</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Bagian 4: Beasiswa -->
+                <div class="card">
+                    <div class="card-header">Bagian 4: Seleksi Beasiswa</div>
+                    <form onsubmit="event.preventDefault(); prosesBeasiswa();">
+                        <div class="form-grid">
+                            <div class="input-group"><label>Nama Lengkap</label><input type="text" name="nama_beasiswa"></div>
+                            <div class="input-group"><label>NIM</label><input type="text" name="nim_beasiswa"></div>
+                            <div class="input-group"><label>Kelas</label><input type="text" name="kelas_beasiswa"></div>
+                            <div class="input-group">
+                                <label>Jurusan</label>
+                                <select name="jurusan_beasiswa">
+                                    <option value="Sistem Informasi">Sistem Informasi</option>
+                                    <option value="Teknik Informatika">Teknik Informatika</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px;">
+                            <label>Jenis Kelamin:</label>
+                            <label><input type="radio" value="Pria" name="jekel"> Pria</label> &nbsp;
+                            <label><input type="radio" value="Wanita" name="jekel"> Wanita</label>
+                        </div>
+                        <div class="input-group" style="width: 50%; margin-top: 10px;">
+                            <label>Nilai IPK (Format: 3.5)</label>
+                            <input type="text" name="ipk">
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <button type="submit" class="btn">Proses Data</button>
+                        </div>
+                    </form>
+                    <div id="hasilBeasiswa"></div>
+                </div>
+
+                <!-- Bagian 10: Registrasi OnFocus/OnBlur -->
+                <div class="card">
+                    <div class="card-header">Bagian 10: Event Registrasi</div>
+                    <form name="f">
+                        <div class="input-group">
+                            <label>NIM (Trigger OnBlur)</label>
+                            <input type="text" name="inim" onBlur="masukannim()">
+                        </div>
+                        <div class="input-group">
+                            <label>Nama Lengkap</label>
+                            <input type="text" name="inama" onBlur="masukannama()">
+                        </div>
+                        <div class="input-group">
+                            <label>Alamat Lengkap</label>
+                            <input type="text" name="ialamat" onBlur="masukanalamat()">
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <button type="button" class="btn btn-dark" onClick="terimakasih()">Kirim Data</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Berbagai Latihan Kecil -->
+                <div class="card">
+                    <div class="card-header">Bagian 6 & 8: Alert & Window Object</div>
+                    <button class="btn" onclick="myfunction('Selamat Pagi Kawan!')">Alert Pagi</button>
+                    <button class="btn btn-dark" onclick="myfunction('Selamat Malam Kawan!')">Alert Malam</button>
+                    <hr style="margin: 15px 0; border: 0; border-top: 1px solid #eee;">
+                    <button class="btn btn-reset" onclick="testWindowObj()">Mulai Window Test</button>
+                    <div id="output-bagian8"></div>
+                    
+                    <div class="card-header" style="margin-top: 25px;">Bagian 5: Pseudo-Class CSS</div>
+                    <div class="latihan-css-box">
+                        <ul><li><a href="#">Beranda</a></li><li><a href="#">Profil</a></li><li><a href="#">Galeri</a></li><li><a href="#">Kontak</a></li></ul>
+                    </div>
+                </div>
+
+                <!-- Latihan Object, Waktu & Marquee -->
+                <div class="card">
+                    <div class="card-header">Bagian 11: Jam Digital Modern</div>
+                    <div class="clock-widget">
+                        <input type="text" id="clockDisplay" readonly>
+                    </div>
+
+                    <div class="card-header" style="margin-top: 25px;">Bagian 14: Marquee (Teks Berjalan)</div>
+                    <form name="basis" style="text-align: center;">
+                        <input type="text" name="kotak" readonly style="background: #e0e7ff; color: #4361ee; font-weight: bold; border: none; text-align: center; font-size: 1.1rem; padding: 15px;">
+                    </form>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">Bagian 7: Object Date</div>
+                    <div id="hasil-tanggal" class="output-box" style="background: #2b2d42;"></div>
+                    
+                    <div class="card-header" style="margin-top: 25px;">Bagian 13: Object Math</div>
+                    <div id="hasil-math" class="output-box" style="background: #1e1e2f;"></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Bagian 9: Waktu Server Form</div>
+                    <div id="hasilWaktu">
+                        <form onsubmit="event.preventDefault(); prosesWaktuServer();">
+                            <div class="input-group">
+                                <label>Ketik Nama Anda</label>
+                                <input type="text" id="firstName" required>
+                            </div>
+                            <button type="submit" class="btn" style="margin-top: 10px;">Catat Waktu</button>
+                        </form>
+                    </div>
+                    
+                    <div class="card-header" style="margin-top: 25px;">Bagian 12: CSS Background Custom</div>
+                    <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 20px; border-radius: 8px; font-weight: 600; color: #333; text-align: center; border: 2px dashed #ff9a9e;">
+                        <p>Nama: Rendi</p>
+                        <p>Umur: 19 Tahun</p>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px; color: #888; font-size: 0.9rem;">
+                &copy; 2026 - Desain Diperbarui & Dioptimalkan oleh murni JavaScript
+            </div>
+        </div>
+    `;
+
+    // =========================================================================
+    // 4. MENGEKSEKUSI DATA (MENGISI ELEMEN KOSONG SAAT LOAD SELESAI)
+    // =========================================================================
+    
+    // PHP Dasar 1 & 2
+    let b3_nim = "251091700183";
+    let b3_nama = "Rendi";
+    let b3_kelas = "03SISE002";
+    document.getElementById("php-dasar-1").innerHTML = `> NIM : ${b3_nim}<br>> Nama: ${b3_nama}<br>> Kls : ${b3_kelas}`;
+    
+    let teks1 = "Aku Sedang belajar ", teks2 = "Pemrograman Web ", teks3 = "Menggunakan JS";
+    document.getElementById("php-dasar-2").innerHTML = `> Misi: ${teks1 + teks2 + teks3}`;
+    
+    // Objek Tanggal
+    var hariArr = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+    var blnArr = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+    var t = new Date();
+    document.getElementById("hasil-tanggal").innerHTML = `
+        Hari ini: ${hariArr[t.getDay()]}, ${t.getDate()} ${blnArr[t.getMonth()]} ${t.getFullYear()}<br>
+        Zona Waktu: Asia/Jakarta
+    `;
+
+    // Objek Math
+    var a = 3, b = 2;
+    var ran = Math.floor(Math.random() * 100);
+    document.getElementById("hasil-math").innerHTML = `
+        > Max(${a}, ${b}) = ${Math.max(a, b)}<br>
+        > ${b} pangkat ${a} = ${Math.pow(b, a)}<br>
+        > Angka Random = ${ran}<br>
+        > Akar ${ran} = ${Math.sqrt(ran).toFixed(2)}
+    `;
+
+    // =========================================================================
+    // 5. INISIALISASI AKHIR
+    // =========================================================================
+    startClock();
+    p();
+
+</script>
+
+</body>
+</html>
